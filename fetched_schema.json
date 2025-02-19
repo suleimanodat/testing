@@ -203,7 +203,7 @@
             },
             "302634": {
                 "data_type": "OBJECT_LIST",
-                "description": "Ensure that all claims and subclaims are accurately extracted from documents. Extract all claims and subclaims by following these steps:\n1- Identify Claims Sections: Locate sections in the document that list claims. These sections often have headers like \"Claim Detail,\" \"Loss Date,\" \"Claim #,\" etc.\n2- Extract Claims Data: Use each attribute name and description to extract the appropriate values. If any field is missing in a row, leave it blank or fill it with a default value (e.g., \"0.00\" for monetary fields).\n3- Iterate Through Claims: Ensure the logic iterates through all claims and subclaims in the document. Each claim and subclaim should be captured separately.\n4- Handle Subclaims: Identify subclaims within each main claim. Subclaims are often listed under the main claim with additional details such as \"Claimant,\" \"Type Of Loss,\" and financial details.\n5- Consistency Check: Verify that all extracted data is consistent with the expected format and values.",
+                "description": "EEnsure that all claims and subclaims are accurately extracted from documents. Extract all claims and subclaims by following these steps:\n1- Identify Claims Sections: Locate sections in the document that list claims. These sections often have headers like \"Claim Detail,\" \"Loss Date,\" \"Claim #,\" etc.\n2- Extract Claims Data: Use each attribute name and description to extract the appropriate values. If any field is missing in a row, leave it blank or fill it with a default value (e.g., \"0.00\" for monetary fields).\n3- Iterate Through Claims: Ensure the logic iterates through all claims and subclaims in the document. Each claim and subclaim should be captured separately.\n4- Handle Subclaims: Identify subclaims within each main claim. Subclaims are often listed under the main claim with additional details such as \"Claimant,\" \"Type Of Loss,\" and financial details.\n5- Consistency Check: Verify that all extracted data is consistent with the expected format and values.",
                 "lines": [
                     {
                         "function_args": [
@@ -275,6 +275,6 @@
         "fields": {},
         "name": "Other"
     },
-    "last_edited_at": "1739977785000",
+    "last_edited_at": "1740004697000",
     "last_edited_class_at": "1723622782000"
 }
