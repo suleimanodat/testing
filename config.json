@@ -1,0 +1,26 @@
+{
+    "source": {
+        "is_advanced": false,
+        "project_id": "01914b87-1ccd-789f-9d6e-0947fdafa594",
+        "flow_path": "",
+        "sb_name": "",
+        "flow_name": "",
+        "org": "",
+        "workspace": "",
+        "app_id": "",
+        "deployment_id": "",
+        "dependencies": [""]
+    },
+    "target": {
+        "org": "ib-internal",
+        "workspace": "Instabase",
+        "project_id": ""
+    },
+    "settings": {
+        "rebuild": true
+    },
+    "testing": {
+        "regression": {}
+    },
+    "release_notes": "Testing first CICD for Loss Run app"
+}
