@@ -1,0 +1,551 @@
+{
+    "project_data": {
+        "createdAtMs": "1723549032000",
+        "creationBase": "NONE",
+        "dataMountPath": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/01914b87-1ccd-789f-9d6e-0947fdafa594",
+        "description": "New project",
+        "extractionMode": "SPLIT_CLASSIFICATION",
+        "id": "01914b87-1ccd-789f-9d6e-0947fdafa594",
+        "llm": "gpt-3.5-turbo",
+        "name": "Loss Run App",
+        "owner": "40924d49-c2db-48fb-95eb-6a282e803ff5",
+        "ownerPublicId": "simran.gupta_instabase.com",
+        "projectMountPath": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/01914b87-1ccd-789f-9d6e-0947fdafa594",
+        "repoId": "98821aa8-fd02-43d9-9ae0-2b958213c050",
+        "schemaVersion": "1",
+        "settings": {
+            "advanced_ocr": {
+                "isChangeLanguageType": false,
+                "isSelectCheckboxes": false,
+                "isSelectFileAsImage": false,
+                "isSelectTables": true,
+                "languageType": "standard",
+                "pagesText": "",
+                "version": "v1"
+            }
+        },
+        "type": "BUILD",
+        "updatedAtMs": "1728457575000",
+        "workspace": "SolEng_workspace"
+    },
+    "project_schema": {
+        "Loss Run": {
+            "class_id": "66875",
+            "description": "Having details/Record of the history of claims made or the title of the document is loss report",
+            "fields": [
+                {
+                    "data_type": "TEXT",
+                    "description": "an insurer is the entity or company that provides insurance coverage. The insurer assumes the financial risk associated with specified perils, losses, or damages in exchange for premium payments made by the insured.If not found then take it from logo",
+                    "field_id": "163807",
+                    "lines": [
+                        {
+                            "function_args": [],
+                            "function_id": null,
+                            "line_type": "PROMPT",
+                            "native_fn_name": null,
+                            "prompt": "Only display the full company name"
+                        }
+                    ],
+                    "model_type": "DEFAULT",
+                    "name": "Insurer",
+                    "position": 2,
+                    "prompt": "Insurer",
+                    "prompt_schema": null,
+                    "prompt_type": "basic"
+                },
+                {
+                    "data_type": "OBJECT_LIST",
+                    "description": "Loss run table is a table present in the document where date of loss, claim status,peril type is present.Confirm the status of the policy with respect to claims made. Provide details on whether any claims have been filed during the policy period.",
+                    "field_id": "164931",
+                    "lines": [
+                        {
+                            "function_args": [
+                                {
+                                    "data_type": "LINE",
+                                    "name": "previous_line",
+                                    "value": "Loss run table@0"
+                                }
+                            ],
+                            "function_id": 2769,
+                            "line_type": "UDF",
+                            "native_fn_name": null,
+                            "prompt": null
+                        },
+                        {
+                            "function_args": [
+                                {
+                                    "data_type": "TEXT",
+                                    "name": "match__pattern",
+                                    "value": "\"[$]\""
+                                },
+                                {
+                                    "data_type": "TEXT",
+                                    "name": "replacement",
+                                    "value": "\"\""
+                                }
+                            ],
+                            "function_id": null,
+                            "line_type": "NATIVE",
+                            "native_fn_name": "regex_replace",
+                            "prompt": null
+                        },
+                        {
+                            "function_args": [],
+                            "function_id": null,
+                            "line_type": "PROMPT",
+                            "native_fn_name": null,
+                            "prompt": "Remove character \",\" from the amount"
+                        }
+                    ],
+                    "model_type": "DEFAULT",
+                    "name": "Loss run table",
+                    "position": 1,
+                    "prompt": "Loss run table",
+                    "prompt_schema": [
+                        {
+                            "description": "Extract the date of loss when the accident is occurred.",
+                            "name": "Loss Date"
+                        },
+                        {
+                            "description": "The exact place, location or address where the incident or loss covered by an insurance policy happened. This information is essential for processing the claim, assessing coverage, and managing the resolution of the claim.",
+                            "name": "Claim Location"
+                        },
+                        {
+                            "description": "Each claim will have a description. It could be multi lined or could be under the data.",
+                            "name": "Claim Description"
+                        },
+                        {
+                            "description": "A category or specific instance of risk or hazard that causes damage or loss, for which an insurance policy provides coverage. Peril types are outlined in the policy and define the events that can trigger a claim.Understand the claim description and then find the cause of damage.",
+                            "name": "Peril Type"
+                        },
+                        {
+                            "description": "A classification or category of protection specified in an insurance policy that outlines the risks or losses covered by the policy and the conditions under which the insurer will provide compensation. Leave the capitalization of text as it is.",
+                            "name": "Coverage Type"
+                        },
+                        {
+                            "description": "Specify the status of this claim.Check the status of the claim. Is it open or close.",
+                            "name": "Claim Status"
+                        },
+                        {
+                            "description": "Paid loss amount is the amount of money an insurer has actually paid to settle claims.",
+                            "name": "Paid Loss"
+                        },
+                        {
+                            "description": "Enter the amount of reserve or reserve amount is equal to the amount of paid loss subtract from amount of incurred loss",
+                            "name": "Reserve"
+                        },
+                        {
+                            "description": "Enter the expense incurred",
+                            "name": "Expense"
+                        },
+                        {
+                            "description": "Extract the amount of loss incurred or paid loss amount + reserve amount",
+                            "name": "Incurred Loss"
+                        }
+                    ],
+                    "prompt_type": "basic"
+                },
+                {
+                    "data_type": "TEXT",
+                    "description": "insured is the person/company who is covered against risk",
+                    "field_id": "164932",
+                    "lines": [],
+                    "model_type": "DEFAULT",
+                    "name": "Insured Party",
+                    "position": 3,
+                    "prompt": "Insured Party",
+                    "prompt_schema": null,
+                    "prompt_type": "basic"
+                },
+                {
+                    "data_type": "TEXT",
+                    "description": "The date of reporting the Claims History. This is usually the same as the date of preparing the presentation.",
+                    "field_id": "164933",
+                    "lines": [
+                        {
+                            "function_args": [],
+                            "function_id": null,
+                            "line_type": "PROMPT",
+                            "native_fn_name": null,
+                            "prompt": "Only display the date in MM/DD/YYYY format"
+                        },
+                        {
+                            "function_args": [
+                                {
+                                    "data_type": "TEXT",
+                                    "name": "input__format",
+                                    "value": "\"\""
+                                },
+                                {
+                                    "data_type": "TEXT",
+                                    "name": "output__format",
+                                    "value": "\"mmddyyyy\""
+                                }
+                            ],
+                            "function_id": null,
+                            "line_type": "NATIVE",
+                            "native_fn_name": "format_date",
+                            "prompt": null
+                        }
+                    ],
+                    "model_type": "DEFAULT",
+                    "name": "Run Date",
+                    "position": 4,
+                    "prompt": "The date of reporting the Claims History. This is usually the same as the date of preparing the presentation.date will be present in the bottom or top of the document. If the run date is present then take that date.",
+                    "prompt_schema": null,
+                    "prompt_type": "advanced"
+                },
+                {
+                    "data_type": "TEXT",
+                    "description": "Number of times a claim is reported or total claim or if there is any case where there is no value the result is No Claims",
+                    "field_id": "164934",
+                    "lines": [
+                        {
+                            "function_args": [],
+                            "function_id": null,
+                            "line_type": "PROMPT",
+                            "native_fn_name": null,
+                            "prompt": "show only integer value"
+                        }
+                    ],
+                    "model_type": "DEFAULT",
+                    "name": "Number of Claims",
+                    "position": 5,
+                    "prompt": "The total count of individual claims reported by the insured under a insurance policy. Each claim represents a request for compensation or benefits due to a covered event or loss.Also The number of unique claims, excluding duplicates or related claims that may be grouped together.If no claim is mention in the document then take 0.",
+                    "prompt_schema": null,
+                    "prompt_type": "advanced"
+                },
+                {
+                    "data_type": "TEXT",
+                    "description": "Extract the start and end dates of the policy period in MM/DD/YYYY format, separated by a hyphen. Extract the earliest date as the start date and the latest date as the end date from the document.Remove all the text.",
+                    "field_id": "164935",
+                    "lines": [],
+                    "model_type": "DEFAULT",
+                    "name": "Claim Period",
+                    "position": 6,
+                    "prompt": "Extract the start and end dates of the policy period in MM/DD/YYYY format, separated by a hyphen. Take the earliest date as the start date and the latest date as the end date from the entire document.Remove all the text.",
+                    "prompt_schema": null,
+                    "prompt_type": "advanced"
+                },
+                {
+                    "data_type": "TABLE",
+                    "description": "Loss run table or detail loss report is a table present in the document where claim date, claim number, location, coverage type, date of loss, claim status, paid, reserved, and expense are present. Select Loss Date, Location as Claim Location, Claim Description, Coverage Description as Peril Type, Coverage Type, Claim Status, Paid Loss, Reserved, and Expense from table.",
+                    "field_id": "255807",
+                    "lines": [],
+                    "model_type": "DEFAULT",
+                    "name": "Loss Run table data",
+                    "position": 7,
+                    "prompt": "Loss Run table data",
+                    "prompt_schema": null,
+                    "prompt_type": "basic"
+                },
+                {
+                    "data_type": "OBJECT_LIST",
+                    "description": "Ensure that all claims and subclaims are accurately extracted from documents. Extract all claims and subclaims by following these steps:\n1- Identify Claims Sections: Locate sections in the document that list claims. These sections often have headers like \"Claim Detail,\" \"Loss Date,\" \"Claim #,\" etc.\n2- Extract Claims Data: Use each attribute name and description to extract the appropriate values. If any field is missing in a row, leave it blank or fill it with a default value (e.g., \"0.00\" for monetary fields).\n3- Iterate Through Claims: Ensure the logic iterates through all claims and subclaims in the document. Each claim and subclaim should be captured separately.\n4- Handle Subclaims: Identify subclaims within each main claim. Subclaims are often listed under the main claim with additional details such as \"Claimant,\" \"Type Of Loss,\" and financial details.\n5- Consistency Check: Verify that all extracted data is consistent with the expected format and values.",
+                    "field_id": "302634",
+                    "lines": [
+                        {
+                            "function_args": [
+                                {
+                                    "data_type": "LINE",
+                                    "name": "previous_line",
+                                    "value": "claims data list@0"
+                                }
+                            ],
+                            "function_id": 4545,
+                            "line_type": "UDF",
+                            "native_fn_name": null,
+                            "prompt": null
+                        }
+                    ],
+                    "model_type": "DEFAULT",
+                    "name": "claims data list",
+                    "position": 0,
+                    "prompt": "claims data list",
+                    "prompt_schema": [
+                        {
+                            "description": "The date when the loss occurred. Extract from the filed or column labeled \"Date of Loss\" or \"Loss Date\" or \"DOL\" or similar.",
+                            "name": "Loss Date"
+                        },
+                        {
+                            "description": "The exact place, location or address where the incident or loss covered by an insurance policy happened. This information is essential for processing the claim, assessing coverage, and managing the resolution of the claim.",
+                            "name": "Claim Location"
+                        },
+                        {
+                            "description": "A brief description of the claim incident. Extract from the field or column labeled \"Description of Claim\" or \"Desc\" or similar.",
+                            "name": "Claim Description"
+                        },
+                        {
+                            "description": "The type of peril or risk involved in the claim. Extract from the filed or column labeled \"Peril Type\" or \"Type Of Loss\" or similar.",
+                            "name": "Peril Type"
+                        },
+                        {
+                            "description": "The type of insurance coverage applicable to the claim. Extract from the field or column labeled \"Coverage Type\" or similar.",
+                            "name": "Coverage Type"
+                        },
+                        {
+                            "description": "The current status of the claim (e.g., Open, Closed). Extract from the field or column labeled \"Claim Status\" or \"Status\" or similar.",
+                            "name": "Claim Status"
+                        },
+                        {
+                            "description": "The amount paid for the loss. Extract from the field or column labeled \"Paid Loss\" or \"Paid Losses\" or similar.",
+                            "name": "Paid Loss"
+                        },
+                        {
+                            "description": "The reserved amount for the claim. Extract from the field or column labeled \"Reserve\" or \"Reserved Losses\" or similar.",
+                            "name": "Reserve"
+                        },
+                        {
+                            "description": "The expenses incurred related to the claim. Extract from the field or column labeled \"Expense\" or \"Paid Expenses\" or similar.",
+                            "name": "Expense"
+                        },
+                        {
+                            "description": "The total incurred loss amount. Extract from the field or column labeled \"Incurred Loss\" or \"Incurred Losses\" or similar.",
+                            "name": "Incurred Loss"
+                        }
+                    ],
+                    "prompt_type": "basic"
+                }
+            ]
+        },
+        "Other": {
+            "class_id": "66880",
+            "description": "",
+            "fields": []
+        }
+    },
+    "project_udfs": {
+        "2769": {
+            "args": [
+                {
+                    "data_type": "LINE",
+                    "name": "previous_line",
+                    "value": "Loss run table@0"
+                }
+            ],
+            "code": "\n\ndef clean_func(previous_line, context = {}, keys = {}, **kwargs):\n\timport json\n\tdata = json.loads(previous_line)\n\tkey_order = [\"Loss Date\", \"Claim Location\", \"Claim Description\", \"Peril Type\", \"Coverage Type\", \"Claim Status\", \"Paid Loss\", \"Reserve\", \"Expense\", \"Incurred Loss\"]\n\tfor record in data:\n\t    reordered_record = {\n\t        key: \"N/A\" if not record.get(key) or record.get(key) == \"null\" else record[key]\n\t        for key in key_order\n\t    }\n\t    for key in record.keys():\n\t        if key not in reordered_record:\n\t            reordered_record[key] = \"N/A\" if record[key] is None or record[key] == \"null\" else record[key]\n\t    record.clear()\n\t    record.update(reordered_record)\n\toutput = json.dumps(data, indent=4)\n\treturn output",
+            "docstring": null,
+            "function_code": "\timport json\n\tdata = json.loads(previous_line)\n\tkey_order = [\"Loss Date\", \"Claim Location\", \"Claim Description\", \"Peril Type\", \"Coverage Type\", \"Claim Status\", \"Paid Loss\", \"Reserve\", \"Expense\", \"Incurred Loss\"]\n\tfor record in data:\n\t    reordered_record = {\n\t        key: \"N/A\" if not record.get(key) or record.get(key) == \"null\" else record[key]\n\t        for key in key_order\n\t    }\n\t    for key in record.keys():\n\t        if key not in reordered_record:\n\t            reordered_record[key] = \"N/A\" if record[key] is None or record[key] == \"null\" else record[key]\n\t    record.clear()\n\t    record.update(reordered_record)\n\toutput = json.dumps(data, indent=4)\n\treturn output",
+            "id": 2769,
+            "lambda_udf_id": "v1:AWS_LAMBDA:1613355280:insaprd-use2-aihub-prd-default-udf:6",
+            "most_recent_results_path": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/01914b87-1ccd-789f-9d6e-0947fdafa594/project/modules/scripts/REFINER/4979befa-4b11-4dbe-b6a8-2f4da7fe03bf_output.json",
+            "name": "clean_func",
+            "project_uuid": "01914b87-1ccd-789f-9d6e-0947fdafa594",
+            "return_type": "string",
+            "scripts_full_path": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/01914b87-1ccd-789f-9d6e-0947fdafa594/project/modules/scripts/REFINER/4979befa-4b11-4dbe-b6a8-2f4da7fe03bf.json",
+            "type": "REFINER"
+        },
+        "4545": {
+            "args": [
+                {
+                    "data_type": "LINE",
+                    "name": "previous_line",
+                    "value": "claims data list@0"
+                }
+            ],
+            "code": "\n\ndef unnamed_custom_function(previous_line, context = {}, keys = {}, **kwargs):\n\ttry:\n\t  import json\n\t\n\t  data = json.loads(previous_line)\n\t  fields = [\"Loss Date\", \"Claim Location\", \"Claim Description\", \"Peril Type\", \"Coverage Type\", \"Claim Status\", \"Paid Loss\", \"Reserve\", \"Expense\", \"Incurred Loss\"]\n\t  for record in data:\n\t    new_rec = {}\n\t    for field in fields:\n\t      if field not in record.keys() or record[field] == None or record[field] == \"null\":\n\t        new_rec[field] = \"N/A\"\n\t      else:\n\t        value = record[field]\n\t\n\t        if field == \"Loss Date\":\n\t          value = value.replace(\"-\", \"/\")\n\t        elif field in [\"Paid Loss\", \"Reserve\", \"Expense\", \"Incurred Loss\"]:\n\t          value = value.replace('$', '').replace(',', '')\n\t          try:\n\t            value = float(value)\n\t            value = f\"{value:.2f}\"\n\t          except:\n\t            do_nothing = 1\n\t\n\t        new_rec[field] = value\n\t\n\t    record.clear()\n\t    record.update(new_rec)\n\t\n\t  return json.dumps(data, indent=4)\n\texcept:\n\t  return previous_line\n\t",
+            "docstring": null,
+            "function_code": "\ttry:\n\t  import json\n\t\n\t  data = json.loads(previous_line)\n\t  fields = [\"Loss Date\", \"Claim Location\", \"Claim Description\", \"Peril Type\", \"Coverage Type\", \"Claim Status\", \"Paid Loss\", \"Reserve\", \"Expense\", \"Incurred Loss\"]\n\t  for record in data:\n\t    new_rec = {}\n\t    for field in fields:\n\t      if field not in record.keys() or record[field] == None or record[field] == \"null\":\n\t        new_rec[field] = \"N/A\"\n\t      else:\n\t        value = record[field]\n\t\n\t        if field == \"Loss Date\":\n\t          value = value.replace(\"-\", \"/\")\n\t        elif field in [\"Paid Loss\", \"Reserve\", \"Expense\", \"Incurred Loss\"]:\n\t          value = value.replace('$', '').replace(',', '')\n\t          try:\n\t            value = float(value)\n\t            value = f\"{value:.2f}\"\n\t          except:\n\t            do_nothing = 1\n\t\n\t        new_rec[field] = value\n\t\n\t    record.clear()\n\t    record.update(new_rec)\n\t\n\t  return json.dumps(data, indent=4)\n\texcept:\n\t  return previous_line\n\t",
+            "id": 4545,
+            "lambda_udf_id": "v1:AWS_LAMBDA:5741611308:insaprd-use2-aihub-prd-docker-default-udf:7",
+            "most_recent_results_path": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/01914b87-1ccd-789f-9d6e-0947fdafa594/project/modules/scripts/REFINER/0911f5b1-065f-4f67-bf08-6b8366d534c8_output.json",
+            "name": "unnamed_custom_function",
+            "project_uuid": "01914b87-1ccd-789f-9d6e-0947fdafa594",
+            "return_type": "string",
+            "scripts_full_path": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/01914b87-1ccd-789f-9d6e-0947fdafa594/project/modules/scripts/REFINER/0911f5b1-065f-4f67-bf08-6b8366d534c8.json",
+            "type": "REFINER"
+        }
+    },
+    "project_validations": [
+        {
+            "affected_fields": [
+                163807
+            ],
+            "alert_level": "FAILURE",
+            "created_at": 1725994420000,
+            "description": "",
+            "id": 2854,
+            "input_fields": [
+                163807
+            ],
+            "name": "Rule 1",
+            "params": {
+                "confidence_threshold": 0.85
+            },
+            "scope": "FIELD",
+            "type": "OCR_CONFIDENCE",
+            "updated_at": 1727950950000
+        },
+        {
+            "affected_fields": [
+                164932
+            ],
+            "alert_level": "FAILURE",
+            "created_at": 1725994688000,
+            "description": "",
+            "id": 2855,
+            "input_fields": [
+                164932
+            ],
+            "name": "Rule 2",
+            "params": {
+                "confidence_threshold": 0.95
+            },
+            "scope": "FIELD",
+            "type": "OCR_CONFIDENCE",
+            "updated_at": 1726258850000
+        },
+        {
+            "affected_fields": [
+                164933
+            ],
+            "alert_level": "FAILURE",
+            "created_at": 1725995700000,
+            "description": "Confidence validation rule for Run Date",
+            "id": 2856,
+            "input_fields": [
+                164933
+            ],
+            "name": "Rule 3",
+            "params": {
+                "confidence_threshold": 0.85
+            },
+            "scope": "FIELD",
+            "type": "CONFIDENCE",
+            "updated_at": 1727950923000
+        },
+        {
+            "affected_fields": [
+                164935
+            ],
+            "alert_level": "FAILURE",
+            "created_at": 1726070377000,
+            "description": "Confidence validation rule for Claim Period",
+            "id": 2903,
+            "input_fields": [
+                164935
+            ],
+            "name": "Rule 4",
+            "params": {
+                "confidence_threshold": 0.8
+            },
+            "scope": "FIELD",
+            "type": "CONFIDENCE",
+            "updated_at": 1726070389000
+        },
+        {
+            "affected_fields": [
+                164934
+            ],
+            "alert_level": "FAILURE",
+            "created_at": 1727887108000,
+            "description": "",
+            "id": 3282,
+            "input_fields": [
+                164934
+            ],
+            "name": "Rule 5",
+            "params": {
+                "confidence_threshold": 0.85
+            },
+            "scope": "FIELD",
+            "type": "CONFIDENCE",
+            "updated_at": 1727950935000
+        },
+        {
+            "affected_fields": [
+                164931
+            ],
+            "alert_level": "FAILURE",
+            "created_at": 1727889572000,
+            "description": "",
+            "id": 3285,
+            "input_fields": [
+                164931
+            ],
+            "name": "Rule 6",
+            "params": {
+                "confidence_threshold": 0.7
+            },
+            "scope": "FIELD",
+            "type": "CONFIDENCE",
+            "updated_at": 1738218841000
+        }
+    ],
+    "reader_profile": {
+        "createdBy": "",
+        "createdOn": 1728457573954,
+        "defaultProfile": "",
+        "foundationVersion": "",
+        "inputPath": null,
+        "lastModifiedBy": "",
+        "lastModifiedOn": 1728457573954,
+        "outputPath": null,
+        "profiles": [
+            {
+                "entitySettings": [],
+                "name": "aihub",
+                "readSettings": {
+                    "add_barcode_identifier": true,
+                    "cache_pdf_results": false,
+                    "correct_inversion": false,
+                    "correct_orientation": false,
+                    "correct_resolution": false,
+                    "correct_resolution_auto": false,
+                    "detect_barcodes": false,
+                    "detect_blurry_files": false,
+                    "dewarp_page": true,
+                    "document_mapping": "document_is_record_skip_empty_page",
+                    "enable_ibdoc_v2": true,
+                    "enable_paragraph_ordering": false,
+                    "enable_table_markdown_enrichment": false,
+                    "encryption_config": null,
+                    "entity_models": [
+                        {
+                            "model_name": "signature_model",
+                            "model_version": "0.0.4"
+                        },
+                        {
+                            "model_name": "barcode_qrcode_detection",
+                            "model_version": "1.0.0"
+                        }
+                    ],
+                    "extract_all_pdf_layers": false,
+                    "find_lines": false,
+                    "fonts": null,
+                    "force_image_ocr": false,
+                    "image_filters": null,
+                    "languages": [
+                        "en"
+                    ],
+                    "layout_algorithm": "layout_algo_spatial",
+                    "model_specific_settings": {
+                        "marx_v1": {
+                            "version": "layout_v3"
+                        }
+                    },
+                    "ocr_page_type": "marx",
+                    "ocr_timeout": null,
+                    "output_format_layout": "layout_per_page",
+                    "output_formats": null,
+                    "page_range_str": "",
+                    "preprocess_excel_files": false,
+                    "process_type": "auto_to_txt",
+                    "produce_metadata_list": true,
+                    "produce_word_metadata": true,
+                    "remove_boxes": false,
+                    "remove_boxes_over_height_percent": null,
+                    "remove_boxes_over_width_percent": null,
+                    "remove_space_wordpolys": true,
+                    "remove_vertical_text": false,
+                    "reorient_words": false,
+                    "repair_pdfs": false,
+                    "scripts_dir": "",
+                    "write_converted_image": true,
+                    "write_thumbnail": true
+                }
+            }
+        ],
+        "schema": "1"
+    }
+}

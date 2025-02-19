@@ -1,0 +1,132 @@
+{
+    "2440": {
+        "args": [],
+        "code": "\t# Import Python packages\n\t# import json\n\t\n\t# Log statements using print()\n\t# print(\"This will appear in the logs\")\n\t\n\t# Return the desired output\n\treturn None",
+        "docstring": null,
+        "lambda_end_of_life": null,
+        "lambda_id": "7",
+        "lambda_udf_id": "v1:AWS_LAMBDA:2637724075:insaprd-use2-aihub-prd-default-udf:6",
+        "last_updated_at": "1723623102000",
+        "name": "unnamed_custom_function",
+        "udf_type": "REFINER"
+    },
+    "2441": {
+        "args": [
+            {
+                "data_type": "LINE",
+                "name": "previous_line",
+                "value": "Claim Period@0"
+            }
+        ],
+        "code": "\t# Import Python packages\n\t# import json\n\t\n\t# Log statements using print()\n\t# print(\"This will appear in the logs\")\n\t\n\t# Return the cleaned output\n\treturn previous_line",
+        "docstring": null,
+        "lambda_end_of_life": null,
+        "lambda_id": "7",
+        "lambda_udf_id": "v1:AWS_LAMBDA:1429014965:insaprd-use2-aihub-prd-default-udf:6",
+        "last_updated_at": "1723625014000",
+        "name": "unnamed_custom_function",
+        "udf_type": "REFINER"
+    },
+    "2749": {
+        "args": [
+            {
+                "data_type": "LINE",
+                "name": "previous_line",
+                "value": "Loss run table@1"
+            }
+        ],
+        "code": "\t# Import Python packages\n\t# import json\n\t\n\t# Log statements using print()\n\t# print(\"This will appear in the logs\")\n\t\n\t# Return the cleaned output\n\treturn previous_line",
+        "docstring": null,
+        "lambda_end_of_life": null,
+        "lambda_id": "7",
+        "lambda_udf_id": "v1:AWS_LAMBDA:1186856784:insaprd-use2-aihub-prd-default-udf:6",
+        "last_updated_at": "1724740394000",
+        "name": "unnamed_custom_function",
+        "udf_type": "REFINER"
+    },
+    "2762": {
+        "args": [
+            {
+                "data_type": "LINE",
+                "name": "previous_line",
+                "value": "Loss run table@1"
+            }
+        ],
+        "code": "\t# Import Python packages\n\t# import json\n\t\n\t# Log statements using print()\n\t# print(\"This will appear in the logs\")\n\t\n\t# Return the cleaned output\n\treturn previous_line",
+        "docstring": null,
+        "lambda_end_of_life": null,
+        "lambda_id": "7",
+        "lambda_udf_id": "v1:AWS_LAMBDA:3165632415:insaprd-use2-aihub-prd-default-udf:6",
+        "last_updated_at": "1724749796000",
+        "name": "unnamed_custom_function",
+        "udf_type": "REFINER"
+    },
+    "2766": {
+        "args": [
+            {
+                "data_type": "LINE",
+                "name": "previous_line",
+                "value": "Loss run table@0"
+            }
+        ],
+        "code": "\timport json\n\t\n\tdata = json.loads(previous_line)\n\t\n\tprint(data)",
+        "docstring": null,
+        "lambda_end_of_life": null,
+        "lambda_id": "7",
+        "lambda_udf_id": "v1:AWS_LAMBDA:1199659912:insaprd-use2-aihub-prd-default-udf:6",
+        "last_updated_at": "1724751615000",
+        "name": "clean_value",
+        "udf_type": "REFINER"
+    },
+    "2767": {
+        "args": [
+            {
+                "data_type": "LINE",
+                "name": "previous_line",
+                "value": "Loss run table@0"
+            }
+        ],
+        "code": "\timport json\n\tdata = json.loads(previous_line)\n\t\n\tfor record in data:\n\t    for key, value in record.items():\n\t        if value == \"\":\n\t            record[key] = \"NA\"\n\t\n\toutput = json.dumps(data, indent=4)\n\treturn output\n\t",
+        "docstring": null,
+        "lambda_end_of_life": null,
+        "lambda_id": "7",
+        "lambda_udf_id": "v1:AWS_LAMBDA:1092557254:insaprd-use2-aihub-prd-default-udf:6",
+        "last_updated_at": "1724756009000",
+        "name": "clean_func",
+        "udf_type": "REFINER"
+    },
+    "2769": {
+        "args": [
+            {
+                "data_type": "LINE",
+                "name": "previous_line",
+                "value": "Loss run table@0"
+            }
+        ],
+        "code": "\timport json\n\tdata = json.loads(previous_line)\n\tkey_order = [\"Loss Date\", \"Claim Location\", \"Claim Description\", \"Peril Type\", \"Coverage Type\", \"Claim Status\", \"Paid Loss\", \"Reserve\", \"Expense\", \"Incurred Loss\"]\n\tfor record in data:\n\t    reordered_record = {\n\t        key: \"N/A\" if not record.get(key) or record.get(key) == \"null\" else record[key]\n\t        for key in key_order\n\t    }\n\t    for key in record.keys():\n\t        if key not in reordered_record:\n\t            reordered_record[key] = \"N/A\" if record[key] is None or record[key] == \"null\" else record[key]\n\t    record.clear()\n\t    record.update(reordered_record)\n\toutput = json.dumps(data, indent=4)\n\treturn output",
+        "docstring": null,
+        "lambda_end_of_life": null,
+        "lambda_id": "7",
+        "lambda_udf_id": "v1:AWS_LAMBDA:1613355280:insaprd-use2-aihub-prd-default-udf:6",
+        "last_updated_at": "1727179246000",
+        "name": "clean_func",
+        "udf_type": "REFINER"
+    },
+    "4545": {
+        "args": [
+            {
+                "data_type": "LINE",
+                "name": "previous_line",
+                "value": "claims data list@0"
+            }
+        ],
+        "code": "\ttry:\n\t  import json\n\t\n\t  data = json.loads(previous_line)\n\t  fields = [\"Loss Date\", \"Claim Location\", \"Claim Description\", \"Peril Type\", \"Coverage Type\", \"Claim Status\", \"Paid Loss\", \"Reserve\", \"Expense\", \"Incurred Loss\"]\n\t  for record in data:\n\t    new_rec = {}\n\t    for field in fields:\n\t      if field not in record.keys() or record[field] == None or record[field] == \"null\":\n\t        new_rec[field] = \"N/A\"\n\t      else:\n\t        value = record[field]\n\t\n\t        if field == \"Loss Date\":\n\t          value = value.replace(\"-\", \"/\")\n\t        elif field in [\"Paid Loss\", \"Reserve\", \"Expense\", \"Incurred Loss\"]:\n\t          value = value.replace('$', '').replace(',', '')\n\t          try:\n\t            value = float(value)\n\t            value = f\"{value:.2f}\"\n\t          except:\n\t            do_nothing = 1\n\t\n\t        new_rec[field] = value\n\t\n\t    record.clear()\n\t    record.update(new_rec)\n\t\n\t  return json.dumps(data, indent=4)\n\texcept:\n\t  return previous_line\n\t",
+        "docstring": null,
+        "lambda_end_of_life": null,
+        "lambda_id": "8",
+        "lambda_udf_id": "v1:AWS_LAMBDA:5741611308:insaprd-use2-aihub-prd-docker-default-udf:7",
+        "last_updated_at": "1739977784000",
+        "name": "unnamed_custom_function",
+        "udf_type": "REFINER"
+    }
+}

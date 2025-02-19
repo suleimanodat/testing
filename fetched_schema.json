@@ -1,0 +1,280 @@
+{
+    "66875": {
+        "description": "Having details/Record of the history of claims made or the title of the document is loss report",
+        "fields": {
+            "163807": {
+                "data_type": "TEXT",
+                "description": "an insurer is the entity or company that provides insurance coverage. The insurer assumes the financial risk associated with specified perils, losses, or damages in exchange for premium payments made by the insured.If not found then take it from logo",
+                "lines": [
+                    {
+                        "function_args": [],
+                        "function_id": null,
+                        "line_type": "PROMPT",
+                        "native_fn_name": null,
+                        "prompt": "Only display the full company name"
+                    }
+                ],
+                "model_type": "DEFAULT",
+                "name": "Insurer",
+                "position": 2,
+                "prompt": "Insurer",
+                "prompt_schema": null,
+                "prompt_type": "basic"
+            },
+            "164931": {
+                "data_type": "OBJECT_LIST",
+                "description": "Loss run table is a table present in the document where date of loss, claim status,peril type is present.Confirm the status of the policy with respect to claims made. Provide details on whether any claims have been filed during the policy period.",
+                "lines": [
+                    {
+                        "function_args": [
+                            {
+                                "data_type": "LINE",
+                                "name": "previous_line",
+                                "value": "Loss run table@0"
+                            }
+                        ],
+                        "function_id": 2769,
+                        "line_type": "UDF",
+                        "native_fn_name": null,
+                        "prompt": null
+                    },
+                    {
+                        "function_args": [
+                            {
+                                "data_type": "TEXT",
+                                "name": "match__pattern",
+                                "value": "\"[$]\""
+                            },
+                            {
+                                "data_type": "TEXT",
+                                "name": "replacement",
+                                "value": "\"\""
+                            }
+                        ],
+                        "function_id": null,
+                        "line_type": "NATIVE",
+                        "native_fn_name": "regex_replace",
+                        "prompt": null
+                    },
+                    {
+                        "function_args": [],
+                        "function_id": null,
+                        "line_type": "PROMPT",
+                        "native_fn_name": null,
+                        "prompt": "Remove character \",\" from the amount"
+                    }
+                ],
+                "model_type": "DEFAULT",
+                "name": "Loss run table",
+                "position": 1,
+                "prompt": "Loss run table",
+                "prompt_schema": [
+                    {
+                        "description": "Extract the date of loss when the accident is occurred.",
+                        "name": "Loss Date"
+                    },
+                    {
+                        "description": "The exact place, location or address where the incident or loss covered by an insurance policy happened. This information is essential for processing the claim, assessing coverage, and managing the resolution of the claim.",
+                        "name": "Claim Location"
+                    },
+                    {
+                        "description": "Each claim will have a description. It could be multi lined or could be under the data.",
+                        "name": "Claim Description"
+                    },
+                    {
+                        "description": "A category or specific instance of risk or hazard that causes damage or loss, for which an insurance policy provides coverage. Peril types are outlined in the policy and define the events that can trigger a claim.Understand the claim description and then find the cause of damage.",
+                        "name": "Peril Type"
+                    },
+                    {
+                        "description": "A classification or category of protection specified in an insurance policy that outlines the risks or losses covered by the policy and the conditions under which the insurer will provide compensation. Leave the capitalization of text as it is.",
+                        "name": "Coverage Type"
+                    },
+                    {
+                        "description": "Specify the status of this claim.Check the status of the claim. Is it open or close.",
+                        "name": "Claim Status"
+                    },
+                    {
+                        "description": "Paid loss amount is the amount of money an insurer has actually paid to settle claims.",
+                        "name": "Paid Loss"
+                    },
+                    {
+                        "description": "Enter the amount of reserve or reserve amount is equal to the amount of paid loss subtract from amount of incurred loss",
+                        "name": "Reserve"
+                    },
+                    {
+                        "description": "Enter the expense incurred",
+                        "name": "Expense"
+                    },
+                    {
+                        "description": "Extract the amount of loss incurred or paid loss amount + reserve amount",
+                        "name": "Incurred Loss"
+                    }
+                ],
+                "prompt_type": "basic"
+            },
+            "164932": {
+                "data_type": "TEXT",
+                "description": "insured is the person/company who is covered against risk",
+                "lines": [],
+                "model_type": "DEFAULT",
+                "name": "Insured Party",
+                "position": 3,
+                "prompt": "Insured Party",
+                "prompt_schema": null,
+                "prompt_type": "basic"
+            },
+            "164933": {
+                "data_type": "TEXT",
+                "description": "The date of reporting the Claims History. This is usually the same as the date of preparing the presentation.",
+                "lines": [
+                    {
+                        "function_args": [],
+                        "function_id": null,
+                        "line_type": "PROMPT",
+                        "native_fn_name": null,
+                        "prompt": "Only display the date in MM/DD/YYYY format"
+                    },
+                    {
+                        "function_args": [
+                            {
+                                "data_type": "TEXT",
+                                "name": "input__format",
+                                "value": "\"\""
+                            },
+                            {
+                                "data_type": "TEXT",
+                                "name": "output__format",
+                                "value": "\"mmddyyyy\""
+                            }
+                        ],
+                        "function_id": null,
+                        "line_type": "NATIVE",
+                        "native_fn_name": "format_date",
+                        "prompt": null
+                    }
+                ],
+                "model_type": "DEFAULT",
+                "name": "Run Date",
+                "position": 4,
+                "prompt": "The date of reporting the Claims History. This is usually the same as the date of preparing the presentation.date will be present in the bottom or top of the document. If the run date is present then take that date.",
+                "prompt_schema": null,
+                "prompt_type": "advanced"
+            },
+            "164934": {
+                "data_type": "TEXT",
+                "description": "Number of times a claim is reported or total claim or if there is any case where there is no value the result is No Claims",
+                "lines": [
+                    {
+                        "function_args": [],
+                        "function_id": null,
+                        "line_type": "PROMPT",
+                        "native_fn_name": null,
+                        "prompt": "show only integer value"
+                    }
+                ],
+                "model_type": "DEFAULT",
+                "name": "Number of Claims",
+                "position": 5,
+                "prompt": "The total count of individual claims reported by the insured under a insurance policy. Each claim represents a request for compensation or benefits due to a covered event or loss.Also The number of unique claims, excluding duplicates or related claims that may be grouped together.If no claim is mention in the document then take 0.",
+                "prompt_schema": null,
+                "prompt_type": "advanced"
+            },
+            "164935": {
+                "data_type": "TEXT",
+                "description": "Extract the start and end dates of the policy period in MM/DD/YYYY format, separated by a hyphen. Extract the earliest date as the start date and the latest date as the end date from the document.Remove all the text.",
+                "lines": [],
+                "model_type": "DEFAULT",
+                "name": "Claim Period",
+                "position": 6,
+                "prompt": "Extract the start and end dates of the policy period in MM/DD/YYYY format, separated by a hyphen. Take the earliest date as the start date and the latest date as the end date from the entire document.Remove all the text.",
+                "prompt_schema": null,
+                "prompt_type": "advanced"
+            },
+            "255807": {
+                "data_type": "TABLE",
+                "description": "Loss run table or detail loss report is a table present in the document where claim date, claim number, location, coverage type, date of loss, claim status, paid, reserved, and expense are present. Select Loss Date, Location as Claim Location, Claim Description, Coverage Description as Peril Type, Coverage Type, Claim Status, Paid Loss, Reserved, and Expense from table.",
+                "lines": [],
+                "model_type": "DEFAULT",
+                "name": "Loss Run table data",
+                "position": 7,
+                "prompt": "Loss Run table data",
+                "prompt_schema": null,
+                "prompt_type": "basic"
+            },
+            "302634": {
+                "data_type": "OBJECT_LIST",
+                "description": "Ensure that all claims and subclaims are accurately extracted from documents. Extract all claims and subclaims by following these steps:\n1- Identify Claims Sections: Locate sections in the document that list claims. These sections often have headers like \"Claim Detail,\" \"Loss Date,\" \"Claim #,\" etc.\n2- Extract Claims Data: Use each attribute name and description to extract the appropriate values. If any field is missing in a row, leave it blank or fill it with a default value (e.g., \"0.00\" for monetary fields).\n3- Iterate Through Claims: Ensure the logic iterates through all claims and subclaims in the document. Each claim and subclaim should be captured separately.\n4- Handle Subclaims: Identify subclaims within each main claim. Subclaims are often listed under the main claim with additional details such as \"Claimant,\" \"Type Of Loss,\" and financial details.\n5- Consistency Check: Verify that all extracted data is consistent with the expected format and values.",
+                "lines": [
+                    {
+                        "function_args": [
+                            {
+                                "data_type": "LINE",
+                                "name": "previous_line",
+                                "value": "claims data list@0"
+                            }
+                        ],
+                        "function_id": 4545,
+                        "line_type": "UDF",
+                        "native_fn_name": null,
+                        "prompt": null
+                    }
+                ],
+                "model_type": "DEFAULT",
+                "name": "claims data list",
+                "position": 0,
+                "prompt": "claims data list",
+                "prompt_schema": [
+                    {
+                        "description": "The date when the loss occurred. Extract from the filed or column labeled \"Date of Loss\" or \"Loss Date\" or \"DOL\" or similar.",
+                        "name": "Loss Date"
+                    },
+                    {
+                        "description": "The exact place, location or address where the incident or loss covered by an insurance policy happened. This information is essential for processing the claim, assessing coverage, and managing the resolution of the claim.",
+                        "name": "Claim Location"
+                    },
+                    {
+                        "description": "A brief description of the claim incident. Extract from the field or column labeled \"Description of Claim\" or \"Desc\" or similar.",
+                        "name": "Claim Description"
+                    },
+                    {
+                        "description": "The type of peril or risk involved in the claim. Extract from the filed or column labeled \"Peril Type\" or \"Type Of Loss\" or similar.",
+                        "name": "Peril Type"
+                    },
+                    {
+                        "description": "The type of insurance coverage applicable to the claim. Extract from the field or column labeled \"Coverage Type\" or similar.",
+                        "name": "Coverage Type"
+                    },
+                    {
+                        "description": "The current status of the claim (e.g., Open, Closed). Extract from the field or column labeled \"Claim Status\" or \"Status\" or similar.",
+                        "name": "Claim Status"
+                    },
+                    {
+                        "description": "The amount paid for the loss. Extract from the field or column labeled \"Paid Loss\" or \"Paid Losses\" or similar.",
+                        "name": "Paid Loss"
+                    },
+                    {
+                        "description": "The reserved amount for the claim. Extract from the field or column labeled \"Reserve\" or \"Reserved Losses\" or similar.",
+                        "name": "Reserve"
+                    },
+                    {
+                        "description": "The expenses incurred related to the claim. Extract from the field or column labeled \"Expense\" or \"Paid Expenses\" or similar.",
+                        "name": "Expense"
+                    },
+                    {
+                        "description": "The total incurred loss amount. Extract from the field or column labeled \"Incurred Loss\" or \"Incurred Losses\" or similar.",
+                        "name": "Incurred Loss"
+                    }
+                ],
+                "prompt_type": "basic"
+            }
+        },
+        "name": "Loss Run"
+    },
+    "66880": {
+        "description": "",
+        "fields": {},
+        "name": "Other"
+    },
+    "last_edited_at": "1739977785000",
+    "last_edited_class_at": "1723622782000"
+}
