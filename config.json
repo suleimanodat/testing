@@ -22,5 +22,5 @@
     "testing": {
         "regression": {}
     },
-    "release_notes": "Testing first CICD for Loss Run app"
+    "release_notes": "Testing second CICD for Loss Run app - changed a prompt in Build to see if it will go thru without publishing the app"
 }
